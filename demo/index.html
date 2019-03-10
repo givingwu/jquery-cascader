@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jQuery Cascader</title>
+  <style>
+    .cascader {
+      position: relative;
+      max-width: 300px;
+    }
+
+    .cascader-hd {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding:  .2em .5em;
+      border: 1px solid #eee;
+    }
+
+    .cascader-bd {
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      min-height: 100px;
+      margin-top: -1px;
+      border: 1px solid #eee;
+    }
+
+    .panel a {
+      color: brown;
+      padding: .3em .5em;
+    }
+
+    .panel .active {
+      color: #fff;
+      background-color: aqua;
+    }
+
+    .panel-hd {
+      border-bottom: 1px dashed #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="cascader">
+    <div class="cascader-hd">四川省成都市</div>
+    <div class="cascader-bd">
+      <div class="panel J_Panel">
+        <div class="panel-hd J_PanelHead"></div>
+        <div class="panel-bd J_PanelBody"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    import $ from "https://dev.jspm.io/jquery"
+    import Cascader from '../src/index.js'
+
+    Cascader({
+      ele: $('.J_Panel'),
+      value: "510199"
+    })
+  </script>
+</body>
+</html>
