@@ -17,13 +17,20 @@
       margin-bottom: 20px;
       padding:  .2em .5em;
       border: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .cascader-hd:hover {
+      color: blue;
+      border-color: black;
     }
 
     .cascader-bd {
+      display: none;
       position: absolute;
       top: 100%;
       width: 100%;
-      min-height: 100px;
+      /* min-height: 100px; */
       margin-top: -1px;
       border: 1px solid #eee;
     }
@@ -44,22 +51,26 @@
   </style>
 </head>
 <body>
-  <div class="cascader">
-    <div class="cascader-hd">四川省成都市</div>
-    <div class="cascader-bd">
+  <div class="cascader J_Cascader">
+    <div class="cascader-hd J_CascaderHead">四川省成都市</div>
+    <div class="cascader-bd J_CascaderBody">
       <div class="panel J_Panel">
         <div class="panel-hd J_PanelHead"></div>
         <div class="panel-bd J_PanelBody"></div>
       </div>
     </div>
   </div>
+
   <script type="module">
     import $ from "https://dev.jspm.io/jquery"
     import Cascader from '../src/index.js'
 
     Cascader({
-      ele: $('.J_Panel'),
-      value: "510199"
+      ele: $('.J_Cascader'),
+      value: "510199",
+      onChange(value) {
+        console.log(value);
+      }
     })
   </script>
 </body>
