@@ -1,6 +1,17 @@
 /* eslint-disable */
+/**
+ * # LICENSE
+ * (c) 2019
+ * @author [vuchan](https://www.github.com/vuchan)
+ * @email <givingwu@gmail.com>
+ * @repository https://github.com/vuchan/jquery-cascader
+ * @issue https://github.com/vuchan/jquery-cascader/issues/new
+ *
+ * 请尊重原创，保留头部版权
+ * 在保留版权的前提下可应用于个人或商业用途
+ */
 import $ from "https://dev.jspm.io/jquery";
-import { getPrevEle, hideSurplusEle, queryAddress } from './utils'
+import { getPrevEle, hideSurplusEle } from './utils'
 
 const noop = $.noop
 const when = $.when
@@ -9,8 +20,9 @@ const isArray = $.isArray
 const isFunction = $.isFunction
 const isEmptyObject = $.isEmptyObject
 
-// default configuration
+// default configurations
 const defaults = {
+  placeholder: '请选择', // 未选中任何数据时的占位符文字
   ele: '.J_Cascader', // 容器元素，默认当前 $(ele).initCascader() 的 ele
   head: '.J_CascaderHead', // 容器元素 > head => 界面显示内容
   body: '.J_CascaderBody', // 容器元素 > body => 弹出框body
@@ -21,7 +33,8 @@ const defaults = {
   panelItemTpl: `<a href="javascript:void(0);" title=""></a>`, // Panel-Item-Anchor 模版字符串
   animation: true, // 是否开启动画
   apiMethod: null, // 远程获取数据的方法 默认为 null
-  onChange: noop // 数据变化时的回调 onChange => (currentActiveItem)
+  onChange: noop, // 数据变化时的回调 onChange => (currentActiveItem: ActiveItem, allActiveItems[]<ActiveItem>)
+  onComplete: noop // 当前级联选择成功或结束时调用 onComplete => (currentActiveItem: ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>)
 }
 
 export default class Cascader {
@@ -46,41 +59,36 @@ export default class Cascader {
     this.$head = $head
     this.$body = $body
     this.$input = $ele.find(input)
-    this.active = null
+    this.activeItem = null
+    this.activeItems = []
 
     this._initialized = false
-    this.bindEvents()
-    this.loadData(value)
+    this._bindEvents() // 绑定事件
+    this._loadData(value) // 加载数据
   }
 
   /**
-   * loadData 加载数据
-   * @description 如果提供了 api 就调用 API，否则的话调用 本地数据集合方法 queryAddress
+   * _loadData 加载数据
+   * @description 调用 apiMethod 加载数据
    * @param {Number | String} id
    * @param {Number} depth
    */
-  loadData(id = 0, depth = 0) {
+  _loadData(id = 0, depth = 0) {
     if (isNaN(+id)) return
-    const { apiMethod, onChange } = this.options
+    const { apiMethod } = this.options
 
-    when(apiMethod && apiMethod(id, depth) || queryAddress(id, depth))
+    when(apiMethod && apiMethod(id, depth))
       .done(data => {
         if (data && data.length) {
-          this.renderPanel(data, depth)
+          this._renderPanel(data, depth)
         } else {
-          this.updateInput()
-
-          if (isFunction(onChange)) {
-            onChange(this.active)
-          }
-
-          this.$doc.click()
+          this.complete()
         }
       })
       .fail(console.error)
   }
 
-  bindEvents() {
+  _bindEvents() {
     const { head, body, animation } = this.options
     const { $ele, $doc } = this
     const $hd = $ele.find(head)
@@ -118,12 +126,12 @@ export default class Cascader {
   }
 
   /**
-   * renderPanel
+   * _renderPanel
    * @description 递归渲染 Tab Panel
    * @param {Array[DataItem<{ label: string, value: string | number, children?: DataItem[] }>]} data
    * @param {Number} index 当前递归深度
    */
-  renderPanel(data, index = 0) {
+  _renderPanel(data, index = 0) {
     const self = this
     const { panelTpl, panelItemTpl, onChange } = this.options
     const {
@@ -185,6 +193,7 @@ export default class Cascader {
           children,
           ...props
         } = item
+        const currentItem = { label, value, parentId, ...props }
         const prevItem = getPrevItem(i)
         const reuseableItem = prevItem && prevItem.length
         const $bd_item = reuseableItem ? prevItem : $(panelItemTpl)
@@ -204,8 +213,9 @@ export default class Cascader {
         }
 
         if (active) {
-          activeRef = { label, value, parentId, ...props }
-          self.active = activeRef
+          activeRef = currentItem
+          self.activeItem = currentItem
+          self.activeItems[index] = currentItem
         }
 
         if (children && children.length) {
@@ -214,17 +224,30 @@ export default class Cascader {
 
         !disabled &&
           $bd_item.click(function() {
-            self.active = { label, value, parentId, ...props }
-
             $(this)
               .addClass('active')
               .siblings()
               .removeClass('active')
 
-            $hd_item.text(label).attr('title', label)
+            index = $hd_item
+              .text(label)
+              .attr('title', label)
+              .data('value', value)
+              .index()
+
+            /* 每次新点击一个元素，则理解为当前元素是 active 的，并触发 onChange 回调 */
+            self.activeItem = currentItem
+
+            /* 当 index === 0 时，不能 slice(0, 0)，所以 offset = index + 1 */
+            self.activeItems = self.activeItems.slice(0, index + 1)
+            self.activeItems[index] = currentItem
+
+            if (isFunction(onChange)) {
+              onChange(self.activeItem, self.activeItems, self)
+            }
 
             if (value) {
-              return self.loadData(value, type)
+              return self._loadData(value, type)
             }
           })
       }
@@ -264,10 +287,10 @@ export default class Cascader {
     !reuseableBody && $body.append($panel)
 
     if (dataRef && dataRef.length) {
-      self.renderPanel(dataRef, ++index)
+      self._renderPanel(dataRef, ++index)
     } else {
       if (activeRef && activeRef.hasChildren && activeRef.value) {
-        self.loadData(activeRef.value, ++index)
+        self._loadData(activeRef.value, ++index)
       } else {
         // 如果存在可复用的 BODY element
         if (reuseableBody) {
@@ -317,17 +340,22 @@ export default class Cascader {
       }
     }
 
-    !this._initialized && this.updateInput()
+    !this._initialized && this._updateInput()
   }
 
-  updateInput () {
-    // hide those DOM elements
-    const { $input, $head } = this
-    const { value } = this.active || {}
-    const placeholder = '请选择'
+  /**
+   * getLabelText
+   * @description 返回当前选中的 label 文字
+   * @param {*} separator 分隔符
+   * @param {Boolean} returnArray 返回一个数组
+   * @returns {String|Array }
+   */
+  getLabelText(separator = ' ', returnArray) {
+    const { $head } = this
+    const { placeholder } = this.options
     const labels = []
 
-    $head.children().each(function () {
+    $head.children().each(function() {
       const $that = $(this)
       const text = $that.text().trim()
       const visible = $that.css('display') !== 'none'
@@ -337,14 +365,40 @@ export default class Cascader {
       }
     })
 
-    const label = labels.join(' ')
+    return returnArray ? labels : labels.join(separator)
+  }
 
-    if (value) {
-      if ($input.prop('tagName') === 'INPUT') {
-        $input.val(label).attr('value', value)
-      } else {
-        $input.text(label).data('value', value)
-      }
+  /**
+   * complete
+   * @description 完成当前 Cascader 状态
+   * @param {Boolean} visible 是否隐藏 Cascader => Popover
+   * @returns {undefined}
+   */
+  complete(visible) {
+    // close current popover CascaderBody
+    !visible && this.$doc.click()
+    this._updateInput()
+
+    const { onComplete } = this.options
+
+    if (isFunction(onComplete)) {
+      onComplete(this.activeItem, this.activeItems, this)
+    }
+  }
+
+  _updateInput() {
+    const { $input } = this
+    const { value } = this.activeItem || {}
+    const { placeholder } = this.options
+    const label = this.getLabelText() || placeholder
+
+    if ($input.prop('tagName') === 'INPUT') {
+      $input
+        .val(label)
+        .data('value', value)
+        .attr('value', value)
+    } else {
+      $input.text(label).data('value', value)
     }
 
     this._initialized = true
@@ -357,7 +411,7 @@ $.fn.initCascader = function $Cascader(options = {}) {
       isFunction(options)
         ? {
             ...options,
-            callback: options,
+            onComplete: options,
             ele: this
           }
         : {
