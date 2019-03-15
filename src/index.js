@@ -122,7 +122,7 @@ export default class Cascader {
    */
   _renderPanel(data, index = 0) {
     const self = this
-    const { panelTpl, panelItemTpl, onChange } = this.options
+    const { panelTpl, panelItemTpl, onChange, placeholder } = this.options
     const {
       $head,
       $body,
@@ -245,7 +245,7 @@ export default class Cascader {
     if (activeRef && !isEmptyObject(activeRef)) {
       $hd_item.text(activeRef.label).attr('title', activeRef.label)
     } else {
-      $hd_item.text('请选择').attr('title', '请选择')
+      $hd_item.text(placeholder).attr('title', placeholder)
     }
 
     if (reuseableHead) {

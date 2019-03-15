@@ -154,4 +154,4 @@ $('.J_Cascader').initCascader({
 
 
 # LICENSE
-MIT (c) vuchan.
+MIT
