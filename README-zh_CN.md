@@ -90,11 +90,35 @@ const defaults = {
 ## [Example]('demo/index.html')
 
 ### ES6
+
+#### npm install
+```bash
+npm i -S jquery-cascader
+```
+
 ```js
 import Cookies from 'js-cookie'
-import '../../includes/mixins/Cascader'
+import Cascader from 'jquery-cascader'
 import { getAreas } from '../../includes/mixins/CommonRequest'
 
+import Cookies from 'js-cookie'
+import Cascader from 'jquery-cascader'
+import { getAreas } from '../../includes/mixins/CommonRequest'
+
+// 1. new operator
+$('.J_Cascader').each(function () {
+  return new Cascader({
+    ele: this,
+    value: Cookies.get('area-code') || null,
+    apiMethod: getAreas,
+    onChange: (currentActiveItem, allItems, cascaderInstance) => console.log(currentActiveItem, allItems, cascaderInstance),
+    onComplete: ({ value: id, levelCode }) => {
+      id && Cookies.set('area-code', id)
+    }
+  })
+})
+
+// 2. jQuery plugin => $.fn.initCascader
 $('.J_Cascader').initCascader({
   value: Cookies.get('area-code') || null,
   apiMethod: getAreas,
@@ -105,14 +129,13 @@ $('.J_Cascader').initCascader({
 })
 ```
 
-### ES4
+### ES5/4
 
 ```HTML
-<script src="packages/lib/jquery.js"></script>
-<script src="packages/lib/js-cookie.js"></script>
-<script src="packages/lib/qs.js"></script>
-<script src="packages/components/commonrequest-runtime.js"></script>
-<script src="packages/components/cascader-runtime.js"></script>
+<script src="./lib/jquery.js"></script>
+<script src="./lib/js-cookie.js"></script>
+<script src="./api/commonrequest-runtime.js"></script>
+<script src="./plugins/jquery.cascader.umd.min.js"></script>
 ```
 
 ```js
@@ -134,8 +157,8 @@ $('.J_Cascader').initCascader({
 
 # TODO
 
-* 处理 数据加载 loading 动效
-* 处理 数据加载 error 异常
+* [ ] 处理 数据加载 loading 动效
+* [ ] 处理 数据加载 error 异常
 
 
 # LICENSE

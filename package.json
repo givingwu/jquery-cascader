@@ -2,7 +2,11 @@
   "name": "jquery-cascader",
   "description": "jQuery.Cascader multiple select component.",
   "version": "1.0.0",
-  "main": "dist/jquery.cascader.esm.js",
+  "main": "src/index.js",
+  "files": [
+    "src/*.js",
+    "dist/*.js"
+  ],
   "module": "dist/jquery.cascader.esm.js",
   "browser": "dist/jquery.cascader.umd.js",
   "browser-min": "dist/jquery.cascader.umd.min.js",

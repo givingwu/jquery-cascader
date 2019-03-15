@@ -92,6 +92,12 @@ Because the text and ID are rendered inside of the Cascader component by looping
 ## [Example]('demo/index.html')
 
 ### ES6
+
+#### npm install
+```bash
+npm i -S jquery-cascader
+```
+
 ```js
 import Cookies from 'js-cookie'
 import Cascader from 'jquery-cascader'
@@ -121,13 +127,13 @@ $('.J_Cascader').initCascader({
 })
 ```
 
-### ES4
+### ES5/4
 
 ```HTML
-<script src="packages/lib/jquery.js"></script>
-<script src="packages/lib/js-cookie.js"></script>
-<script src="packages/components/commonrequest-runtime.js"></script>
-<script src="packages/components/cascader-runtime.js"></script>
+<script src="./lib/jquery.js"></script>
+<script src="./lib/js-cookie.js"></script>
+<script src="./api/commonrequest-runtime.js"></script>
+<script src="./plugins/jquery.cascader.umd.min.js"></script>
 ```
 
 ```js
@@ -149,8 +155,8 @@ $('.J_Cascader').initCascader({
 
 # TODO
 
-* animation effect when `loading`
-* error handler when error
+* [ ] animation effect when `loading`
+* [ ] error handler when error
 
 
 # LICENSE
