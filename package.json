@@ -1,0 +1,43 @@
+{
+  "name": "jquery-cascader",
+  "description": "jQuery.Cascader multiple select component.",
+  "version": "1.0.0",
+  "main": "dist/jquery.cascader.esm.js",
+  "module": "dist/jquery.cascader.esm.js",
+  "browser": "dist/jquery.cascader.umd.js",
+  "browser-min": "dist/jquery.cascader.umd.min.js",
+  "scripts": {
+    "start": "rollup -c -w",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js",
+    "pretest": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuchan/jquery-cascader.git"
+  },
+  "keywords": [
+    "cascader",
+    "jquery-cascader",
+    "cascader-multiselect"
+  ],
+  "author": "vuchan (givingwu@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vuchan/jquery-cascader/issues"
+  },
+  "homepage": "https://github.com/vuchan/jquery-cascader#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "rollup": "^1.6.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-terser": "^4.0.4"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
