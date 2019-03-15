@@ -1,6 +1,6 @@
 /* eslint-disable */
 import $ from "https://dev.jspm.io/jquery";
-import { getPrevEle, hideSurplusEle, queryAddress } from './utils'
+import { getPrevEle, hideSurplusEle, queryAddress } from './utils';
 
 const noop = $.noop
 const when = $.when
