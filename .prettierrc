@@ -1,0 +1,21 @@
+{
+  "semi": false,
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "strict",
+  "parser": "babel",
+  "printWidth": 80,
+  "proseWrap": "preserve",
+  "requirePragma": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json",
+        "semi": false
+      }
+    }
+  ]
+}
