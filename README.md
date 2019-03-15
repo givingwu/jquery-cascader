@@ -1,10 +1,9 @@
 # Cascader
 
-jQuery.Cascader 多级级联组件。
+jQuery.Cascader 多级级联组件.
 
-![jQuery.Cascader]('screenshots/screentshot.png')
-
-
+![screentshot](./screenshots/screentshot.png)
+![screentshot gif](./screenshots/cascaderscreenvideo.gif)
 
 ## FEATURES
 
@@ -12,6 +11,11 @@ jQuery.Cascader 多级级联组件。
 * 支持本地/远程数据集合
 * 支持通过`apiMethod`远程懒加载数据
 * 递归渲染 item.children 支持任意深度树形数据
+
+## ChangeLogs
+
++ 2019-03-14: feat: `Cascader` 支持 `config.options.onChange(currentActiveItem: Cascader.ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>, cascader: Cascader)`, 支持 `Cascader.complete()` => `config.options.onComplete(currentActiveItem: Cascader.ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>, cascader: Cascader)`, 支持 `Cascader.getLabelText(returnsArray: boolean): string` 获取所有 `label` 字符串。
+
 
 # USAGE
 
@@ -44,7 +48,8 @@ const defaults = {
   panelItemTpl: `<a href="javascript:void(0);" title=""></a>`, // Panel-Item-Anchor 模版字符串
   animation: true, // 是否开启动画
   apiMethod: null, // 远程获取数据的方法 默认为 null
-  onChange: noop // 数据变化时的回调 onChange => (currentActiveItem)
+  onChange: noop, // 数据变化时的回调 onChange => (currentActiveItem)
+  onComplete: noop // 当前级联选择成功或结束时调用 onComplete => (currentActiveItem: ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>)
 }
 ```
 
@@ -79,7 +84,8 @@ import { getAreas } from '../../includes/mixins/CommonRequest'
 $('.J_Cascader').initCascader({
   value: Cookies.get('area-code') || null,
   apiMethod: getAreas,
-  onChange: ({ value: id, levelCode }) => {
+  onChange: (currentActiveItem, allItems, cascaderInstance) => console.log(currentActiveItem, allItems, cascaderInstance),
+  onComplete: ({ value: id, levelCode }) => {
     id && Cookies.set('area-code', id)
   }
 })
@@ -90,7 +96,7 @@ $('.J_Cascader').initCascader({
 ```HTML
 <script src="packages/lib/jquery.js"></script>
 <script src="packages/lib/js-cookie.js"></script>
-<script src="packages/lib/querystring.js"></script>
+<script src="packages/lib/qs.js"></script>
 <script src="packages/components/commonrequest-runtime.js"></script>
 <script src="packages/components/cascader-runtime.js"></script>
 ```
@@ -99,9 +105,11 @@ $('.J_Cascader').initCascader({
 $('.J_Cascader').initCascader({
   value: Cookies.get('area-code') || null,
   apiMethod: CommonRequest.getAreas,
-  onChange: function (activeItem) {
+  onChange: function (currentActiveItem, allItems, cascaderInstance) {
+    console.log(currentActiveItem, allItems, cascaderInstance)
+  },
+  onComplete: function (activeItem) {
     console.log('activeItem: ', activeItem)
-
     const id = activeItem.value
 
     id && Cookies.set('area-code', id)
@@ -111,6 +119,5 @@ $('.J_Cascader').initCascader({
 
 # TODO
 
-+ [ ] 处理 数据加载 loading 动效
-+ [ ] 处理 数据加载 error 异常
-+ [ ] 引入 rollup 打包
+* 处理 数据加载 loading 动效
+* 处理 数据加载 error 异常
