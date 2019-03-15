@@ -1,6 +1,9 @@
 # Cascader
 
-jQuery.Cascader 多级级联组件
+jQuery.Cascader 多级级联组件.
+
+![screentshot](./screenshots/screentshot.png)
+![screentshot gif](./screenshots/cascaderscreenvideo.gif)
 
 ## FEATURES
 
