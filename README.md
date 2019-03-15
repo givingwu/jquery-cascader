@@ -11,7 +11,7 @@ jQuery.Cascader 多级级联组件
 
 ## ChangeLogs
 
-+ 2019-03-14: feat: `Cascader` 支持 `config.options.onChange(currentActiveItem: Cascader.ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>, cascader: Cascader)`, 支持 `Cascader.complete()` => `config.options.onComplete(currentActiveItem: Cascader.ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>, cascader: Cascader)`, 支持 `Cascader.getLabelText(): string` 获取所有 `label` 字符串。
++ 2019-03-14: feat: `Cascader` 支持 `config.options.onChange(currentActiveItem: Cascader.ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>, cascader: Cascader)`, 支持 `Cascader.complete()` => `config.options.onComplete(currentActiveItem: Cascader.ActiveItem, allActiveItems: allActiveItems[]<ActiveItem>, cascader: Cascader)`, 支持 `Cascader.getLabelText(returnsArray: boolean): string` 获取所有 `label` 字符串。
 
 
 # USAGE
