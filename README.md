@@ -1,6 +1,6 @@
 # Cascader
 
-jQuery.Cascader multiselect component. [中文](README-zh_CN.md)
+jQuery.Cascader multiselect component. [中文](README-zh_CN.md) | [DEMO](https://vuchan.github.io/jquery-cascader/)
 
 ![screenshot gif](./screenshots/cascader-screen-video.gif)
 
@@ -89,7 +89,7 @@ The data format returned by `apiMethod` needs to be converted to the following d
 
 Because the text and ID are rendered inside of the Cascader component by looping the `label` and `value` of the first layer of data to each DOM node, and if current item data has a certain `item.children` exists in processing, current reference of `item.children` will be recorded, after the first layer is rendered, then recursively call the `renderPanel` method inside the component to render the second layer of data, looping back and forth.
 
-## [Example]('../../../pages/search/index.js')
+## [Example]('demo/index.html')
 
 ### ES6
 ```js

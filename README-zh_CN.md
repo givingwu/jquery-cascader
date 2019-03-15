@@ -1,6 +1,6 @@
 # Cascader
 
-jQuery.Cascader 多级级联组件. [English](./README.md)
+jQuery.Cascader 多级级联组件. [English](./README.md) | [DEMO](https://vuchan.github.io/jquery-cascader/)
 
 ![screenshot gif](./screenshots/cascader-screen-video.gif)
 
@@ -87,7 +87,7 @@ const defaults = {
 
 因为在 Cascader 组件内部通过循环第一层数据的`label`和`value`渲染 文字和ID 到每个DOM节点上，而且在过程中如果发现某个 item 的数据存在 children 字段，则记录当前的 children 引用，在第一层渲染结束后，则递归调用组件内部的 `renderPanel` 方法渲染第二层数据，循环往复。
 
-## [Example]('../../../pages/search/index.js')
+## [Example]('demo/index.html')
 
 ### ES6
 ```js
