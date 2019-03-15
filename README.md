@@ -1,8 +1,8 @@
 # Cascader
 
-jQuery.Cascader multiselect component. [中文](./README-zh_CN.md)
+jQuery.Cascader multiselect component. [中文](README-zh_CN.md)
 
-![screenshot gif](./screenshots/CascaderScreenVideo.gif)
+![screenshot gif](./screenshots/cascader-screen-video.gif)
 
 ## FEATURES
 
