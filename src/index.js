@@ -1,16 +1,5 @@
 /* eslint-disable */
-/**
- * # LICENSE
- * (c) 2019
- * @author [vuchan](https://www.github.com/vuchan)
- * @email <givingwu@gmail.com>
- * @repository https://github.com/vuchan/jquery-cascader
- * @issue https://github.com/vuchan/jquery-cascader/issues/new
- *
- * 请尊重原创，保留头部版权
- * 在保留版权的前提下可应用于个人或商业用途
- */
-import $ from "https://dev.jspm.io/jquery";
+import $ from 'jquery'
 import { getPrevEle, hideSurplusEle } from './utils'
 
 const noop = $.noop

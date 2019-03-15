@@ -1,4 +1,3 @@
-import MapDataset from "./data.js";
 
 // 复用 DOM
 export const getPrevEle = dom => (index = -1) => {
@@ -22,55 +21,3 @@ export const hideSurplusEle = dom => index => {
   }
 }
 
-// Local dataset
-export const queryAddress = (id, idx = 0) => {
-  let data = MapDataset;
-  let val = [];
-  let notSame = true;
-
-  while (!idx ? notSame : val.length <= idx) {
-    let childrenRef = null;
-    let res = [];
-
-    data &&
-      data.length &&
-      data.forEach((item, index) => {
-        const { value, children, ...prop } = item;
-        const hasChildren = children && children.length;
-        const similar = id.startsWith(value);
-
-        if (similar) {
-          childrenRef = children;
-        }
-
-        res.push({
-          hasChildren,
-          active: similar,
-          ...prop,
-          value
-        });
-
-        if (id === value) {
-          notSame = false;
-        }
-      });
-
-    data = childrenRef;
-    val.push(res);
-  }
-
-  let i = val.length - 1;
-
-  while (i >= 0) {
-    let curr = val[i];
-    let parent = val[--i];
-
-    parent &&
-      parent.forEach(item => {
-        if (item.active) {
-          item.children = curr;
-        }
-      });
-  }
-  return val[idx];
-};
