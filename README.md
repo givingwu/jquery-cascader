@@ -52,6 +52,7 @@ jQuery.Cascader multiselect component. [中文](README-zh_CN.md) | [DEMO](https:
 
 ```js
 const defaults = {
+  placeholder: 'Please select',
   ele: '.J_Cascader', // container element，default is the ele of `$(ele).initCascader()`
   value: null, // initial value of Cascader，if passed it will call `apiMethod(value)` to get data then rendering them to inner DOM elements of container element
   head: '.J_CascaderHead', // see `DOM fragment` above
