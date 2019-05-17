@@ -156,8 +156,8 @@ $('.J_Cascader').initCascader({
 
 # TODO
 
-* [ ] animation effect when `loading`
-* [ ] error handler when error
+* [ ] with animation effect when `loading`
+* [ ] error hook handler when error
 
 
 # LICENSE
