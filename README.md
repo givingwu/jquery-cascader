@@ -48,6 +48,57 @@ jQuery.Cascader multiselect component. [中文](README-zh_CN.md) | [DEMO](https:
 </div>
 ```
 
+## Style
+```css
+   .cascader {
+      position: relative;
+      display: inline-block;
+      min-width: 300px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .cascader-hd {
+      display: block;
+      padding:  .2em .5em;
+      border: 1px solid #eee;
+      cursor: pointer;
+    }
+    .cascader-hd:hover {
+      color: blue;
+      border-color: #ddd;
+    }
+    .cascader-bd {
+      display: none;
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      /* min-height: 100px; */
+      margin-top: -1px;
+      border: 1px solid #eee;
+      z-index: 3;
+    }
+    .panel,
+    .panel-hd,
+    .panel-bd {
+      text-align: left;
+      background-color: #fff;
+    }
+    .panel a {
+      display: inline-block;
+      padding: .25em .5em;
+      color: #333;
+      text-decoration: none;
+    }
+    .panel a.active {
+      color: #fff;
+      background-color: #0366d6;
+    }
+    .panel-hd {
+      border-bottom: 1px solid #ebebeb;
+    }
+```
+
 ## Configuration Options
 
 ```js
