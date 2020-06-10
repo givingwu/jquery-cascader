@@ -1,6 +1,6 @@
 # Cascader
 
-jQuery.Cascader multiselect component. [中文](README-zh_CN.md) | [DEMO](https://vuchan.github.io/jquery-cascader/)
+jQuery.Cascader multiselect component. [中文](README-zh_CN.md) | [DEMO](https://givingwu.github.io/jquery-cascader/)
 
 ![screenshot gif](./screenshots/cascader-screen-video.gif)
 
