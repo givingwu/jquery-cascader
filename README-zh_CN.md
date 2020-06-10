@@ -1,6 +1,6 @@
 # Cascader
 
-jQuery.Cascader 多级级联组件. [English](./README.md) | [DEMO](https://vuchan.github.io/jquery-cascader/)
+jQuery.Cascader 多级级联组件. [English](./README.md) | [DEMO](https://givingwu.github.io/jquery-cascader/)
 
 ![screenshot gif](./screenshots/cascader-screen-video.gif)
 
